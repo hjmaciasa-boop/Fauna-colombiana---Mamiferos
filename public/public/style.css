@@ -1,0 +1,28 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#0a2f1f 0%,#1b4d2e 100%); min-height:100vh; color:white; }
+.container { max-width:1200px; margin:0 auto; padding:20px; text-align:center; }
+h1 { font-size:2rem; text-shadow:2px 2px 4px black; }
+.menu-buttons { background:rgba(0,0,0,0.4); padding:30px; border-radius:20px; display:inline-block; margin-top:30px; width:90%; }
+input { padding:12px; font-size:1rem; border:none; border-radius:10px; margin:10px; width:80%; }
+button { background:#ff9800; color:white; border:none; padding:12px 20px; font-size:1rem; border-radius:30px; cursor:pointer; transition:0.2s; margin:5px; }
+button:hover { background:#ff5722; transform:scale(1.02); }
+.game-container { max-width:1400px; margin:0 auto; padding:15px; }
+.opponents { display:flex; justify-content:center; gap:15px; margin-bottom:20px; flex-wrap:wrap; }
+.jugador-oponente { background:rgba(0,0,0,0.6); border-radius:20px; padding:12px; text-align:center; min-width:110px; border-left:5px solid #ff9800; }
+.mesa { background:rgba(0,0,0,0.3); border-radius:25px; padding:20px; margin:20px 0; min-height:180px; }
+.cartas-mesa { display:flex; justify-content:center; gap:15px; flex-wrap:wrap; }
+.carta-mesa { background:#fff8e7; color:#3e2723; width:130px; padding:10px; border-radius:15px; text-align:center; box-shadow:0 8px 12px black; border:2px solid #d4a373; }
+.carta-mesa strong { font-size:1rem; display:block; background:#ff9800; color:white; border-radius:30px; padding:4px; margin-bottom:6px; }
+.mano { background:rgba(0,0,0,0.5); border-radius:25px; padding:15px; margin-top:20px; }
+.cartas { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:15px; }
+.carta { background:#fff8e7; color:#3e2723; width:110px; padding:8px; border-radius:15px; text-align:center; font-size:0.7rem; box-shadow:0 6px 8px black; border:2px solid #d4a373; transition:0.1s; }
+.carta strong { font-size:0.8rem; background:#2e7d32; color:white; display:block; border-radius:20px; padding:3px; margin-bottom:6px; }
+.selector-atributo { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.95); padding:20px; border-radius:25px; z-index:200; text-align:center; width:90%; }
+.botones-atributos { display:flex; gap:12px; margin-top:15px; flex-wrap:wrap; justify-content:center; }
+.chat-box { background:rgba(0,0,0,0.5); border-radius:20px; padding:10px; margin-top:15px; max-height:200px; overflow-y:auto; }
+#mensajesChat, #mensajesJuego { height:120px; overflow-y:auto; font-size:0.8rem; text-align:left; padding:5px; }
+.chat-box input { width:70%; padding:8px; margin:5px; }
+.chat-box button { padding:8px 15px; }
+.turn-indicator { background:#ff9800; border-radius:30px; padding:8px; margin:10px auto; width:fit-content; font-weight:bold; }
+.info { font-size:0.8rem; margin-top:15px; color:#ddd; }
+@media (max-width:700px) { .carta, .carta-mesa { width:85px; font-size:0.6rem; } button { padding:8px 12px; } }
