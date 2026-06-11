@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Fauna Colombiana - Mamíferos Colombianos</title>
+    <title>Fauna Colombiana - Mamíferos</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -12,12 +12,13 @@
         <h2>Mamíferos Colombianos</h2>
         <div class="menu-buttons">
             <input type="text" id="nombre" placeholder="Tu nombre" maxlength="20">
-            <button onclick="crearSala()">✨ Crear Sala ✨</button>
+            <button id="btnCrearSala">✨ Crear Sala ✨</button>
             <div class="unirse">
                 <input type="text" id="codigoSala" placeholder="Código de sala">
-                <button onclick="unirseSala()">🔗 Unirse a Sala</button>
+                <button id="btnUnirseSala">🔗 Unirse a Sala</button>
             </div>
         </div>
+        <div id="mensajeError" style="color:#ffaa00; margin-top:20px;"></div>
     </div>
 
     <div id="salaEspera" class="container" style="display:none;">
@@ -29,9 +30,9 @@
         <div id="chatEspera" class="chat-box">
             <div id="mensajesChat"></div>
             <input type="text" id="chatInput" placeholder="Escribe un mensaje..." maxlength="100">
-            <button onclick="enviarMensaje()">Enviar</button>
+            <button id="btnEnviarChat">Enviar</button>
         </div>
-        <button id="btnIniciar" onclick="iniciarPartida()" style="display:none;">🎮 Iniciar Partida (mínimo 2 jugadores)</button>
+        <button id="btnIniciar" style="display:none;">🎮 Iniciar Partida (mínimo 2 jugadores)</button>
         <p class="info">Comparte el código con tus amigos.</p>
     </div>
 
@@ -53,18 +54,18 @@
         <div id="chatJuego" class="chat-box" style="margin-top:20px;">
             <div id="mensajesJuego"></div>
             <input type="text" id="chatInputJuego" placeholder="Mensaje..." maxlength="100">
-            <button onclick="enviarMensajeJuego()">Enviar</button>
+            <button id="btnEnviarChatJuego">Enviar</button>
         </div>
     </div>
 
     <div id="selectorAtributo" class="selector-atributo" style="display:none;">
         <h3>🎲 Elige un atributo:</h3>
         <div class="botones-atributos">
-            <button onclick="enviarAtributo('peso')">⚖️ Peso</button>
-            <button onclick="enviarAtributo('longitud')">📏 Longitud</button>
-            <button onclick="enviarAtributo('velocidad')">💨 Velocidad</button>
-            <button onclick="enviarAtributo('vida')">🕰️ Vida</button>
-            <button onclick="enviarAtributo('crias')">👶 Crías</button>
+            <button data-atributo="peso">⚖️ Peso</button>
+            <button data-atributo="longitud">📏 Longitud</button>
+            <button data-atributo="velocidad">💨 Velocidad</button>
+            <button data-atributo="vida">🕰️ Vida</button>
+            <button data-atributo="crias">👶 Crías</button>
         </div>
     </div>
 
