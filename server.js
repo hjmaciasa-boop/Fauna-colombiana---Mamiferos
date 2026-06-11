@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 app.use(express.static('public'));
 
-// ========== MAMÍFEROS COLOMBIANOS (33 cartas) ==========
+// ---------- LAS 33 CARTAS (MAMÍFEROS COLOMBIANOS) ----------
 const cartas = [
   { id:1, nombre:"JAGUAR", peso:75, longitud:170, velocidad:80, vida:13, crias:3 },
   { id:2, nombre:"OSO DE ANTEOJOS", peso:150, longitud:170, velocidad:48, vida:25, crias:2 },
@@ -46,21 +46,17 @@ const cartas = [
 const salas = {};
 
 function barajar(a) { for (let i=a.length-1;i>0;i--) { let j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-
 function valorCarta(carta, atributo) { return carta.comodin ? 99 : carta[atributo]; }
-
 function repartir(jugadores) {
   let mazo = barajar([...cartas]);
   let idx=0;
   jugadores.forEach(j => { j.cartas = mazo.slice(idx, idx+8); j.bazas=[]; idx+=8; });
 }
-
 function siguienteTurno(idSala) {
   const sala = salas[idSala];
   if (!sala || sala.estado !== 'jugando') return;
   io.to(sala.jugadores[sala.turno].id).emit('elegirAtributo');
 }
-
 function resolverBaza(idSala, jugadas, atributo, ganadorId) {
   const sala = salas[idSala];
   const ganador = sala.jugadores.find(j => j.id === ganadorId);
@@ -81,7 +77,6 @@ function resolverBaza(idSala, jugadas, atributo, ganadorId) {
   io.to(idSala).emit('actualizarEstado', { jugadores: sala.jugadores.map(j => ({ id:j.id, nombre:j.nombre, numCartas:j.cartas.length, bazas:j.bazas.length })) });
   siguienteTurno(idSala);
 }
-
 function manejarEmpate(idSala, empates, atributo, originales) {
   const sala = salas[idSala];
   const nuevas = [];
@@ -100,7 +95,6 @@ function manejarEmpate(idSala, empates, atributo, originales) {
 
 io.on('connection', (socket) => {
   console.log('Conectado:', socket.id);
-  
   socket.on('crearSala', (nombre) => {
     const idSala = uuidv4().slice(0,6);
     salas[idSala] = {
@@ -114,7 +108,6 @@ io.on('connection', (socket) => {
     socket.emit('salaCreada', idSala);
     io.to(idSala).emit('actualizarJugadores', salas[idSala].jugadores.map(j=>({id:j.id,nombre:j.nombre})));
   });
-  
   socket.on('unirseSala', (idSala, nombre) => {
     const sala = salas[idSala];
     if(sala && sala.jugadores.length < 4 && sala.estado === 'esperando') {
@@ -125,7 +118,6 @@ io.on('connection', (socket) => {
       io.to(idSala).emit('chatBot', { mensaje: `🎉 ${nombre} se unió a la sala.`, autor: 'Bot' });
     } else socket.emit('error', 'Sala llena o partida en curso');
   });
-  
   socket.on('iniciarPartida', (idSala) => {
     const sala = salas[idSala];
     if(sala && sala.jugadores.length >= 2 && sala.estado === 'esperando' && sala.jugadores[0].id === socket.id) {
@@ -137,7 +129,6 @@ io.on('connection', (socket) => {
       siguienteTurno(idSala);
     } else socket.emit('error', 'Mínimo 2 jugadores y debes ser el creador');
   });
-  
   socket.on('elegirAtributo', ({ idSala, atributo }) => {
     const sala = salas[idSala];
     if(!sala || sala.estado !== 'jugando') return;
@@ -151,21 +142,23 @@ io.on('connection', (socket) => {
       else manejarEmpate(idSala, ganadores, atributo, jugadas);
     }, 3000);
   });
-  
   socket.on('mensajeChat', ({ idSala, texto, autor }) => {
     const sala = salas[idSala];
     if(sala) {
       sala.chat.push({ autor, texto, hora: new Date().toLocaleTimeString() });
       io.to(idSala).emit('nuevoMensaje', { autor, texto });
-      // Respuestas automáticas del bot
       if(texto.toLowerCase().includes('hola')) 
         io.to(idSala).emit('chatBot', { mensaje: `👋 ¡Hola ${autor}! ¿Listo para jugar?`, autor: 'Bot' });
       else if(texto.toLowerCase().includes('gracias'))
         io.to(idSala).emit('chatBot', { mensaje: `😊 ¡De nada! Disfruta la partida.`, autor: 'Bot' });
       else if(texto.toLowerCase().includes('como se juega'))
-        io.to(idSala).emit('chatBot', { mensaje: `📖 Elige un atributo (Peso, Longitud, Velocidad, Vida o Crías). Gana quien tenga el número más alto. El comodín vale 99.`, autor: 'Bot' });
+        io.to(idSala).emit('chatBot', { mensaje: `📖 Elige un atributo (Peso, Longitud, Velocidad, Vida o Crías). Gana el número más alto. El comodín vale 99.`, autor: 'Bot' });
     }
   });
 });
 
-server.listen(3000, () => console.log('Servidor en puerto 3000'));
+// === CORRECCIÓN IMPORTANTE: USAR EL PUERTO QUE ASIGNA RENDER ===
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en puerto ${PORT}`);
+});
