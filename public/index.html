@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Fauna Colombiana - Mamíferos Colombianos</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="menu" class="container">
+        <h1>🦥 FAUNA COLOMBIANA 🦜</h1>
+        <h2>Mamíferos Colombianos</h2>
+        <div class="menu-buttons">
+            <input type="text" id="nombre" placeholder="Tu nombre" maxlength="20">
+            <button onclick="crearSala()">✨ Crear Sala ✨</button>
+            <div class="unirse">
+                <input type="text" id="codigoSala" placeholder="Código de sala">
+                <button onclick="unirseSala()">🔗 Unirse a Sala</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="salaEspera" class="container" style="display:none;">
+        <h2>Sala: <span id="codigoSalaMostrar"></span></h2>
+        <div class="jugadores-lista">
+            <h3>👥 Jugadores conectados:</h3>
+            <ul id="listaJugadores"></ul>
+        </div>
+        <div id="chatEspera" class="chat-box">
+            <div id="mensajesChat"></div>
+            <input type="text" id="chatInput" placeholder="Escribe un mensaje..." maxlength="100">
+            <button onclick="enviarMensaje()">Enviar</button>
+        </div>
+        <button id="btnIniciar" onclick="iniciarPartida()" style="display:none;">🎮 Iniciar Partida (mínimo 2 jugadores)</button>
+        <p class="info">Comparte el código con tus amigos.</p>
+    </div>
+
+    <div id="juego" class="game-container" style="display:none;">
+        <div class="header">
+            <h2>🐅 MAMÍFEROS COLOMBIANOS</h2>
+            <div id="infoTurno" class="turn-indicator">Esperando...</div>
+        </div>
+        <div class="game-area">
+            <div class="opponents" id="oponentes"></div>
+            <div class="mesa" id="mesa">
+                <div class="cartas-mesa" id="cartasMesa"></div>
+            </div>
+            <div class="mano">
+                <h3>Tu mano (<span id="numCartas">0</span> cartas)</h3>
+                <div id="tusCartas" class="cartas"></div>
+            </div>
+        </div>
+        <div id="chatJuego" class="chat-box" style="margin-top:20px;">
+            <div id="mensajesJuego"></div>
+            <input type="text" id="chatInputJuego" placeholder="Mensaje..." maxlength="100">
+            <button onclick="enviarMensajeJuego()">Enviar</button>
+        </div>
+    </div>
+
+    <div id="selectorAtributo" class="selector-atributo" style="display:none;">
+        <h3>🎲 Elige un atributo:</h3>
+        <div class="botones-atributos">
+            <button onclick="enviarAtributo('peso')">⚖️ Peso</button>
+            <button onclick="enviarAtributo('longitud')">📏 Longitud</button>
+            <button onclick="enviarAtributo('velocidad')">💨 Velocidad</button>
+            <button onclick="enviarAtributo('vida')">🕰️ Vida</button>
+            <button onclick="enviarAtributo('crias')">👶 Crías</button>
+        </div>
+    </div>
+
+    <div id="finJuego" class="container" style="display:none;">
+        <h2>🏆 PARTIDA TERMINADA 🏆</h2>
+        <p id="ganadorTexto"></p>
+        <button onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>
